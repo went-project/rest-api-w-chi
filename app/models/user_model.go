@@ -19,8 +19,8 @@ type User struct {
 	DeletedAt gorm.DeletedAt `gorm:"index" json:"-" swaggerignore:"true"`
 }
 
-// HiddenFields specifies fields to omit in JSON responses
-var HiddenFields = []string{
+// HiddenFieldsOfUser specifies fields to omit in JSON responses
+var HiddenFieldsOfUser = []string{
 	"password",
 	"deleted_at",
 }
@@ -58,7 +58,7 @@ func (u *User) BeforeUpdate(tx *gorm.DB) (err error) {
 // CRUD Operations
 func (u *User) FindAll(db *gorm.DB, where map[string]interface{}) ([]User, error) {
 	var users []User
-	err := db.Select("*").Omit(HiddenFields...).Where(where).Find(&users).Error
+	err := db.Select("*").Omit(HiddenFieldsOfUser...).Where(where).Find(&users).Error
 	return users, err
 }
 
